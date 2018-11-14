@@ -1,6 +1,20 @@
 const Adagrams = {
   drawLetters() {
-    // Implement this method for wave 1
+    let drawnLetters = [];
+    let letterPool = 'AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOOPPQRRRRRRSSSSTTTTTTUUUUVVWWXYYZ'.split('')
+
+    let i = 0;
+    while (i < 10) {
+      let letter = letterPool[Math.floor(Math.random() * letterPool.length)];
+      let pos = letterPool.indexOf(letter);
+      drawnLetters.push(letter);
+      letterPool.splice(pos, 1);
+      i += 1;
+    }
+    return drawnLetters;
+  },
+  usesAvailableLetters() {
+    
   },
 };
 
