@@ -13,8 +13,36 @@ const Adagrams = {
     }
     return drawnLetters;
   },
-  usesAvailableLetters() {
-    
+  usesAvailableLetters(input, lettersInHand) {
+    const word = input.toUpperCase().split('');
+
+    const count = (arr, element) => {
+      let sum = 0;
+      arr.forEach(function (item) {
+        if (item === element ) {
+          sum += 1;
+        }
+      });
+      return sum;
+    };
+
+    const letterResults = word.map(function (letter) {
+      if (count(word, letter) > count(lettersInHand, letter)) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+
+    let answer = true;
+
+    letterResults.forEach(function (item) {
+      if (item === false) {
+        answer = false;
+      }
+    });
+
+    return answer;
   },
 };
 
