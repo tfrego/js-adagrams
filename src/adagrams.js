@@ -1,3 +1,14 @@
+// count elements in array
+const count = (arr, element) => {
+  let sum = 0;
+  arr.forEach(function (item) {
+    if (item === element ) {
+      sum += 1;
+    }
+  });
+  return sum;
+};
+
 const Adagrams = {
   drawLetters() {
     let drawnLetters = [];
@@ -15,16 +26,6 @@ const Adagrams = {
   },
   usesAvailableLetters(input, lettersInHand) {
     const word = input.toUpperCase().split('');
-
-    const count = (arr, element) => {
-      let sum = 0;
-      arr.forEach(function (item) {
-        if (item === element ) {
-          sum += 1;
-        }
-      });
-      return sum;
-    };
 
     const letterResults = word.map(function (letter) {
       if (count(word, letter) > count(lettersInHand, letter)) {
@@ -86,7 +87,55 @@ const Adagrams = {
 
     return score;
   },
+  highestScoreFrom(words) {
+    const scores = words.map( (word) => this.scoreWord(word) );
+
+    const maxScore = Math.max(...scores);
+
+    let i = 0;
+    let wordScores = [];
+
+    while (i < words.length) {
+      let wordInfo = {
+        word: words[i],
+        score: scores[i]
+      }
+      wordScores.push(wordInfo);
+      i += 1;
+    }
+
+    let indices = [];
+    let j = 0;
+    while (j < scores.length) {
+      if (scores[j] === maxScore) {
+        indices.push(j);
+      }
+      j += 1;
+    }
+
+    let winner = undefined;
+
+    for (let i = indices.length - 1; i >= 0; i -= 1) {
+      let index = indices[i];
+      if (wordScores[index].word.length === 10) {
+        winner = wordScores[index];
+      }
+    }
+
+    if (winner == undefined) {
+      winner = wordScores[indices[0]]
+      for (let i = indices.length - 1; i >= 0; i--) {
+        if (wordScores[indices[i]].word.length < winner.word.length)  {
+          winner = wordScores[indices[i]];
+        }
+      }
+    }
+
+    return winner;
+  }
 };
+
+// Adagrams.highestScoreFrom(['AAAAAAAAAA', 'BBBBBB'])
 
 // Do not remove this line or your tests will break!
 export default Adagrams;
